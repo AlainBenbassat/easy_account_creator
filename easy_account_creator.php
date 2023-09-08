@@ -5,6 +5,16 @@ require_once 'easy_account_creator.civix.php';
 use CRM_EasyAccountCreator_ExtensionUtil as E;
 // phpcs:enable
 
+
+function easy_account_creator_civicrm_summaryActions(&$actions, $contactID) {
+  if (!empty($actions['otherActions']['user-add'])) {
+    $originalLink = 'civicrm/contact/view/useradd';
+    $newLink = CRM_EasyAccountCreator_Config::getConfirmationScreenUrl();
+
+    $actions['otherActions']['user-add']['href'] = str_replace($originalLink, $newLink, $actions['otherActions']['user-add']['href']);
+  }
+}
+
 /**
  * Implements hook_civicrm_config().
  *
