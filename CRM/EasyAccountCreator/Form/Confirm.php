@@ -14,7 +14,8 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
   }
 
   public function setDefaultValues() {
-    $contact = $this->getContactDetails();
+    $cid = $this->getContactIdFromUrl();
+    $contact = $this->getContactDetails($cid);
 
     $defaultValues = [
       'contact_id' => $contact['id'],
@@ -25,6 +26,28 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
     ];
 
     $this->setDefaults($defaultValues);
+  }
+
+  public function validate() {
+    $values = $this->exportValues();
+
+    $this->validateEmailAddress($values['contact_email']);
+    $this->validateExistingUser($values['contact_email']);
+
+    return parent::validate();
+  }
+
+  private function validateEmailAddress($email) {
+    if (empty($email)) {
+      $this->setElementError('contact_email', E::ts('The contact must have an email address because it is used as login name.'));
+    }
+  }
+
+  private function validateExistingUser($email) {
+    $user = CRM_EasyAccountCreator_UserFactory::getUser();
+    if ($user->exists($email)) {
+      $this->setElementError('contact_email', E::ts('A user with this email address already exists.'));
+    }
   }
 
   public function postProcess() {
@@ -41,9 +64,7 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
     $this->addYesNo('send_mail', E::ts('Send Welcome Mail?'), FALSE, TRUE);
   }
 
-  private function getContactDetails() {
-    $cid = $this->getContactIdFromUrl();
-
+  private function getContactDetails($cid) {
     return \Civi\Api4\Contact::get(FALSE)
       ->addSelect('id', 'first_name', 'last_name', 'email.email')
       ->addJoin('Email AS email', 'LEFT', ['email.is_primary', '=', 1])
@@ -53,12 +74,12 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
   }
 
   private function getContactIdFromUrl() {
-    $vals = $this->controller->exportValues($this->_name);
-    if (empty($vals)) {
-      return CRM_Utils_Request::retrieveValue('cid', 'Positive', 0, TRUE);
+    $values = $this->exportValues();
+    if (!empty($values['contact_id'])) {
+      return $values['contact_id'];
     }
     else {
-      return $vals['cid'];
+      return CRM_Utils_Request::retrieveValue('cid', 'Positive', 0, TRUE);
     }
   }
 
