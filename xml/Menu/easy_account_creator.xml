@@ -6,4 +6,10 @@
     <title>Confirm</title>
     <access_arguments>access CiviCRM</access_arguments>
   </item>
+  <item>
+    <path>civicrm/admin/easy-account-creator</path>
+    <page_callback>CRM_EasyAccountCreator_Form_Settings</page_callback>
+    <title>Settings</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
 </menu>

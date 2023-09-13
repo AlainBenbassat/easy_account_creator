@@ -2,69 +2,82 @@
 
 use CRM_EasyAccountCreator_ExtensionUtil as E;
 
-/**
- * Form controller class
- *
- * @see https://docs.civicrm.org/dev/en/latest/framework/quickform/
- */
 class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
   public function buildQuickForm() {
+    $this->setTitle(E::ts('Create User'));
 
-    // add form elements
-    $this->add(
-      'select', // field type
-      'favorite_color', // field name
-      'Favorite Color', // field label
-      $this->getColorOptions(), // list of options
-      TRUE // is required
-    );
-    $this->addButtons(array(
-      array(
-        'type' => 'submit',
-        'name' => E::ts('Submit'),
-        'isDefault' => TRUE,
-      ),
-    ));
+    $this->addFormElements();
+    $this->addFormButtons();
 
-    // export form elements
     $this->assign('elementNames', $this->getRenderableElementNames());
     parent::buildQuickForm();
   }
 
+  public function setDefaultValues() {
+    $contact = $this->getContactDetails();
+
+    $defaultValues = [
+      'contact_id' => $contact['id'],
+      'contact_name' => $contact['first_name'] . ' ' . $contact['last_name'],
+      'contact_email' => $contact['email.email'],
+      'password' => 'some random password',
+      'send_mail' => 1,
+    ];
+
+    $this->setDefaults($defaultValues);
+  }
+
   public function postProcess() {
-    $values = $this->exportValues();
-    $options = $this->getColorOptions();
-    CRM_Core_Session::setStatus(E::ts('You picked color "%1"', array(
-      1 => $options[$values['favorite_color']],
-    )));
+    $user = CRM_EasyAccountCreator_UserFactory::getUser();
+
     parent::postProcess();
   }
 
-  public function getColorOptions() {
-    $options = array(
-      '' => E::ts('- select -'),
-      '#f00' => E::ts('Red'),
-      '#0f0' => E::ts('Green'),
-      '#00f' => E::ts('Blue'),
-      '#f0f' => E::ts('Purple'),
-    );
-    foreach (array('1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e') as $f) {
-      $options["#{$f}{$f}{$f}"] = E::ts('Grey (%1)', array(1 => $f));
-    }
-    return $options;
+  private function addFormElements() {
+    $this->add('text', 'contact_id', E::ts('Contact ID:'), ['disabled' => 'disabled']);
+    $this->add('text', 'contact_name', E::ts('Contact Name:'), ['disabled' => 'disabled']);
+    $this->add('text', 'contact_email', E::ts('Login Name:'), ['disabled' => 'disabled']);
+    $this->add('password', 'password', E::ts('Password:'), ['disabled' => 'disabled']);
+    $this->addYesNo('send_mail', E::ts('Send Welcome Mail?'), FALSE, TRUE);
   }
 
-  /**
-   * Get the fields/elements defined in this form.
-   *
-   * @return array (string)
-   */
-  public function getRenderableElementNames() {
-    // The _elements list includes some items which should not be
-    // auto-rendered in the loop -- such as "qfKey" and "buttons".  These
-    // items don't have labels.  We'll identify renderable by filtering on
-    // the 'label'.
-    $elementNames = array();
+  private function getContactDetails() {
+    $cid = $this->getContactIdFromUrl();
+
+    return \Civi\Api4\Contact::get(FALSE)
+      ->addSelect('id', 'first_name', 'last_name', 'email.email')
+      ->addJoin('Email AS email', 'LEFT', ['email.is_primary', '=', 1])
+      ->addWhere('id', '=', $cid)
+      ->execute()
+      ->first();
+  }
+
+  private function getContactIdFromUrl() {
+    $vals = $this->controller->exportValues($this->_name);
+    if (empty($vals)) {
+      return CRM_Utils_Request::retrieveValue('cid', 'Positive', 0, TRUE);
+    }
+    else {
+      return $vals['cid'];
+    }
+  }
+
+  private function addFormButtons() {
+    $this->addButtons([
+      [
+        'type' => 'submit',
+        'name' => E::ts('Create user'),
+        'isDefault' => TRUE,
+      ],
+      [
+        'type' => 'cancel',
+        'name' => E::ts('Cancel'),
+      ],
+    ]);
+  }
+
+  private function getRenderableElementNames() {
+    $elementNames = [];
     foreach ($this->_elements as $element) {
       /** @var HTML_QuickForm_Element $element */
       $label = $element->getLabel();

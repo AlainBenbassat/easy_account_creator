@@ -105,14 +105,12 @@ function easy_account_creator_civicrm_entityTypes(&$entityTypes): void {
  *
  * @link https://docs.civicrm.org/dev/en/latest/hooks/hook_civicrm_navigationMenu
  */
-//function easy_account_creator_civicrm_navigationMenu(&$menu): void {
-//  _easy_account_creator_civix_insert_navigation_menu($menu, 'Mailings', [
-//    'label' => E::ts('New subliminal message'),
-//    'name' => 'mailing_subliminal_message',
-//    'url' => 'civicrm/mailing/subliminal',
-//    'permission' => 'access CiviMail',
-//    'operator' => 'OR',
-//    'separator' => 0,
-//  ]);
-//  _easy_account_creator_civix_navigationMenu($menu);
-//}
+function easy_account_creator_civicrm_navigationMenu(&$menu): void {
+  _easy_account_creator_civix_insert_navigation_menu($menu, 'Administer/System Settings', [
+    'label' => E::ts('Easy Account Creator Settings'),
+    'name' => 'easy_account_creator_settings',
+    'url' => 'civicrm/admin/easy-account-creator',
+    'permission' => 'administer CiviCRM',
+  ]);
+  _easy_account_creator_civix_navigationMenu($menu);
+}
