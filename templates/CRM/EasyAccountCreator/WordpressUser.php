@@ -1,11 +1,12 @@
 <?php
 
-class CRM_EasyAccountCreator_WordpressUser implements CRM_EasyAccountCreator_UserInterface {
-  public function exists($loginName) {
-    return TRUE;
+class CRM_EasyAccountCreator_WordpressUser extends CRM_EasyAccountCreator_User {
+  public function exists($name, $email) {
+    die('NOT IMPLEMENTED YET');
   }
 
   public function create() {
-    // Utils/System/WordPress.php - zit hier een user create functie in?
+    die('NOT IMPLEMENTED YET');
+    // see Utils/System/WordPress.php
   }
 }

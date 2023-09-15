@@ -6,6 +6,7 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
   public function buildQuickForm() {
     $this->setTitle(E::ts('Create User'));
 
+    $this->assign('intro', E::ts('Create a user for contact:'));
     $this->addFormElements();
     $this->addFormButtons();
 
@@ -61,7 +62,7 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
     $this->add('text', 'contact_name', E::ts('Contact Name:'), ['disabled' => 'disabled']);
     $this->add('text', 'contact_email', E::ts('Login Name:'), ['disabled' => 'disabled']);
     $this->add('password', 'password', E::ts('Password:'), ['disabled' => 'disabled']);
-    $this->addYesNo('send_mail', E::ts('Send Welcome Mail?'), FALSE, TRUE);
+    $this->add('checkbox', 'send_mail', E::ts('Send Welcome Mail?'));
   }
 
   private function getContactDetails($cid) {

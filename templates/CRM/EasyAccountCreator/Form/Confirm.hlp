@@ -1,0 +1,9 @@
+{htxt id='send_mail-title'}
+  {ts}Send Welcome Mail?{/ts}
+{/htxt}
+{htxt id='send_mail'}
+  <p>
+    {ts}The template that will be used can be set <a href="../../civicrm/admin/easy-account-creator">here</a>.{/ts}
+  </p>
+{/htxt}
+
