@@ -6,8 +6,10 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
   public function buildQuickForm() {
     $this->setTitle(E::ts('Create User'));
 
+    $cid = $this->getContactIdFromUrl();
+
     $this->assign('intro', E::ts('Create a user for contact:'));
-    $this->addFormElements();
+    $this->addFormElements($cid);
     $this->addFormButtons();
 
     $this->assign('elementNames', $this->getRenderableElementNames());
@@ -16,17 +18,18 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
 
   public function setDefaultValues() {
     $cid = $this->getContactIdFromUrl();
-    $contact = $this->getContactDetails($cid);
+    if ($cid) {
+      $contact = $this->getContactDetails($cid);
 
-    $defaultValues = [
-      'contact_id' => $contact['id'],
-      'contact_name' => $contact['first_name'] . ' ' . $contact['last_name'],
-      'contact_email' => $contact['email.email'],
-      'password' => 'some random password',
-      'send_mail' => 1,
-    ];
+      $defaultValues = [
+        'contact_name' => $contact['first_name'] . ' ' . $contact['last_name'],
+        'contact_email' => $contact['email.email'],
+        'password' => 'some random password',
+        'send_mail' => 1,
+      ];
 
-    $this->setDefaults($defaultValues);
+      $this->setDefaults($defaultValues);
+    }
   }
 
   public function validate() {
@@ -45,6 +48,8 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
   }
 
   private function validateExistingUser($email) {
+    $values = $this->controller->exportValues($this->_name);
+
     $user = CRM_EasyAccountCreator_UserFactory::getUser();
     if ($user->exists($email)) {
       $this->setElementError('contact_email', E::ts('A user with this email address already exists.'));
@@ -52,16 +57,21 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
   }
 
   public function postProcess() {
+    $values = $this->controller->exportValues($this->_name);
+
     $user = CRM_EasyAccountCreator_UserFactory::getUser();
+    $ufId = $user->create($values['contact_email'], $values['contact_email']);
+    $user->linktoContact($values['contact_id'], $ufId);
+    $user->sendWelcomeMail();
 
     parent::postProcess();
   }
 
-  private function addFormElements() {
-    $this->add('text', 'contact_id', E::ts('Contact ID:'), ['disabled' => 'disabled']);
-    $this->add('text', 'contact_name', E::ts('Contact Name:'), ['disabled' => 'disabled']);
-    $this->add('text', 'contact_email', E::ts('Login Name:'), ['disabled' => 'disabled']);
-    $this->add('password', 'password', E::ts('Password:'), ['disabled' => 'disabled']);
+  private function addFormElements($cid) {
+    $this->add('hidden', 'contact_id', $cid);
+    $this->add('text', 'contact_name', E::ts('Contact Name:'));
+    $this->add('text', 'contact_email', E::ts('Login Name:'));
+    $this->add('password', 'password', E::ts('Password:'));
     $this->add('checkbox', 'send_mail', E::ts('Send Welcome Mail?'));
   }
 
@@ -75,12 +85,12 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
   }
 
   private function getContactIdFromUrl() {
-    $values = $this->exportValues();
+    $values = $this->controller->exportValues($this->_name);//$this->exportValues();
     if (!empty($values['contact_id'])) {
       return $values['contact_id'];
     }
     else {
-      return CRM_Utils_Request::retrieveValue('cid', 'Positive', 0, TRUE);
+      return CRM_Utils_Request::retrieveValue('cid', 'Positive', 0, FALSE);
     }
   }
 

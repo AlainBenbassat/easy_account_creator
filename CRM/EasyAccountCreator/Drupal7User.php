@@ -19,6 +19,8 @@ class CRM_EasyAccountCreator_Drupal7User extends CRM_EasyAccountCreator_User {
       'status' => 1,
       'init' => $email,
       'roles' => [DRUPAL_AUTHENTICATED_RID => 'authenticated user'],
+      'timezone' => date_default_timezone_get(),
+      'language' => language_default()->language,
     ];
 
     user_save('', $new_user);
