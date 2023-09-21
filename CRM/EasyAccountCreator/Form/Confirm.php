@@ -59,10 +59,29 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
   public function postProcess() {
     $values = $this->controller->exportValues($this->_name);
 
-    $user = CRM_EasyAccountCreator_UserFactory::getUser();
-    $ufId = $user->create($values['contact_email'], $values['contact_email']);
-    $user->linktoContact($values['contact_id'], $ufId);
-    $user->sendWelcomeMail();
+    try {
+      $user = CRM_EasyAccountCreator_UserFactory::getUser();
+      $account = $user->create($values['contact_email'], $values['contact_email']);
+      $user->linktoContact($values['contact_id'], $account->uid);
+
+      if ($values['send_mail']) {
+        $sent = $user->sendWelcomeMail($values['contact_id'], $values['contact_name'], $values['contact_email']);
+        if (!$sent) {
+          throw new Exception(E::ts('Could not send welcome mail'));
+        }
+
+        $successMessage = E::ts('User account created, and a welcome mail was sent.');
+      }
+      else {
+        $successMessage = E::ts('User account created. No welcome mail was sent.');
+      }
+
+      CRM_Core_Session::setStatus(E::ts('Success'), $successMessage, 'success');
+      CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/contact/view', 'reset=1&cid=' . $values['contact_id']));
+    }
+    catch (Exception $e) {
+      CRM_Core_Session::setStatus(E::ts('Error'), $e->getMessage(), 'error');
+    }
 
     parent::postProcess();
   }

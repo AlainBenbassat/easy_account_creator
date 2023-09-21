@@ -21,25 +21,26 @@ abstract class CRM_EasyAccountCreator_User {
   }
 
   public function linktoContact($contactId, $ufId) {
-
+    Civi\Api4\UFMatch::create(FALSE)
+      ->addValue('uf_id', $ufId)
+      ->addValue('contact_id', $contactId)
+      ->execute();
   }
 
-  public function sendWelcomeMail() {
-    [$domainEmailName, $domainEmailAddress] = CRM_Core_BAO_Domain::getNameAndEmail();
-    $sendFrom = '"' . $domainEmailName . '" <' . $domainEmailAddress . '>';
+  public function sendWelcomeMail($contactId, $contactName, $contactEmail) {
+    $optionGroup = CRM_EasyAccountCreator_Config::getOptionGroupForWorkflowMessage();
+    $msgTemplate = CRM_EasyAccountCreator_Config::getMsgTemplate();
 
     [$sent, $subject, $message, $html] = CRM_Core_BAO_MessageTemplate::sendTemplate([
-      'groupName' => 'msg_tpl_workflow_contribution',
-      'workflow' => $tplName,
-      'contactId' => $pcpInfo['contact_id'],
-      'tplParams' => $tplParams,
-      'from' => $sendFrom,
-      'toName' => $name,
-      'toEmail' => $address,
+      'groupName' => $optionGroup['name'],
+      'workflow' => $msgTemplate['workflow_name'],
+      'contactId' => $contactId,
+      'tplParams' => [],
+      'from' => '"' . Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_NAME) . '"  <' . Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_ADDRESS) . '>',
+      'toName' => $contactName,
+      'toEmail' => $contactEmail,
     ]);
-    return $sent;
 
-    CRM_Core_BAO_MessageTemplate::sendTemplate($sendTemplateParams);
-    CRM_Utils_Mail::send($mailParams);
+    return $sent;
   }
 }

@@ -1,5 +1,7 @@
 <?php
 
+// Rest password YOURSITE/user/password?name=LOGIN-NAME
+
 class CRM_EasyAccountCreator_Drupal7User extends CRM_EasyAccountCreator_User {
   public function exists($email) {
     $account = user_load_by_mail($email);
@@ -23,6 +25,6 @@ class CRM_EasyAccountCreator_Drupal7User extends CRM_EasyAccountCreator_User {
       'language' => language_default()->language,
     ];
 
-    user_save('', $new_user);
+    return user_save('', $new_user);
   }
 }

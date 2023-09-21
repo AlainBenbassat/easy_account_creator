@@ -11,12 +11,15 @@ class CRM_EasyAccountCreator_Form_Settings extends CRM_Core_Form {
     $this->addFormButtons();
 
     $this->assign('elementNames', $this->getRenderableElementNames());
+
     parent::buildQuickForm();
   }
 
   public function postProcess() {
     $vals = $this->controller->exportValues($this->_name);
-    Civi::settings()->set('easy_account_creator_message_template_id', $vals['message_template_id']);
+
+    Civi::settings()->set(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_NAME, $vals['email_from_name']);
+    Civi::settings()->set(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_ADDRESS, $vals['email_from_address']);
 
     CRM_Core_Session::setStatus('', E::ts( 'Settings saved.'), 'success');
 
@@ -25,14 +28,21 @@ class CRM_EasyAccountCreator_Form_Settings extends CRM_Core_Form {
 
   public function setDefaultValues() {
     $defaultValues = [
-      'message_template_id' => Civi::settings()->get('easy_account_creator_message_template_id'),
+      'email_from_name' => Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_NAME),
+      'email_from_address' => Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_ADDRESS),
     ];
 
     $this->setDefaults($defaultValues);
   }
 
   private function addFormElements() {
-    $this->add('select', 'message_template_id', E::ts('Message template for welcome mail:'), $this->getMessageTemplates(), TRUE);
+    $this->add('text', 'email_from_name', E::ts('Email from name'), [], TRUE);
+    $this->add('text', 'email_from_address', E::ts('Email from address'), [], TRUE);
+
+    $msgTemplate = CRM_EasyAccountCreator_Config::getMsgTemplate();
+    $this->assign('msg_template_label', E::ts('Message template'));
+    $this->assign('msg_template_id', $msgTemplate['id']);
+    $this->assign('msg_template_subject', $msgTemplate['msg_subject']);
   }
 
   private function addFormButtons() {

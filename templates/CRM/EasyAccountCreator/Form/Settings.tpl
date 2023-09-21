@@ -1,10 +1,3 @@
-{* HEADER *}
-
-<div class="crm-submit-buttons">
-{include file="CRM/common/formButtons.tpl" location="top"}
-</div>
-
-{* FIELD EXAMPLE: OPTION 1 (AUTOMATIC LAYOUT) *}
 
 {foreach from=$elementNames item=elementName}
   <div class="crm-section">
@@ -14,14 +7,13 @@
   </div>
 {/foreach}
 
-{* FIELD EXAMPLE: OPTION 2 (MANUAL LAYOUT)
+<div class="crm-section">
+  <div class="label">{$msg_template_label}</div>
+  <div class="content"><a href="messageTemplates/add?action=update&id={$msg_template_id}&reset=1">{$msg_template_subject}</a></div>
+  <div class="clear"></div>
+</div>
 
-  <div>
-    <span>{$form.favorite_color.label}</span>
-    <span>{$form.favorite_color.html}</span>
-  </div>
-
-{* FOOTER *}
+  {* FOOTER *}
 <div class="crm-submit-buttons">
 {include file="CRM/common/formButtons.tpl" location="bottom"}
 </div>
