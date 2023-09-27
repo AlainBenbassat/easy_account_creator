@@ -1,0 +1,88 @@
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Create User"
+msgstr "Maak gebruiker aan"
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Create a user for contact:"
+msgstr "Maak gebruiker aan voor contact:"
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "The contact must have an email address because it is used as login name."
+msgstr "Het contact moet een e-mailadres hebben. Dit wordt gebruikt als login-naam."
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "A user with this email address already exists."
+msgstr "Er bestaat al een gebruiker met dit e-mailadres."
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Could not send welcome mail"
+msgstr "Kon welkomstmail niet vezenden."
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "User account created, and a welcome mail was sent."
+msgstr "Gebruiker is aangemaakt en een welkomstmail werd verzonden."
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "User account created. No welcome mail was sent."
+msgstr "Gebruiker is aangemaakt. Er werd geen welkomstmail verzonden."
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Success"
+msgstr "Succes"
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Error"
+msgstr "Fout"
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Contact Name:"
+msgstr "Naam contact:"
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Login Name:"
+msgstr "Gebruikersnaam:"
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Password:"
+msgstr "Wachtwoord:"
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php ./templates/CRM/EasyAccountCreator/Form/Confirm.hlp
+msgid "Send Welcome Mail?"
+msgstr "Welkomstmail versturen?"
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Create user"
+msgstr "Maak gebruiker aan"
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Settings saved."
+msgstr "Bewaard."
+
+#: ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Email from name"
+msgstr "Naam afzender"
+
+#: ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Email from address"
+msgstr "E-mailadres afzender"
+
+#: ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Message template"
+msgstr "Berichtsjabloon"
+
+#: ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Save"
+msgstr "Opslaan"
+
+#: ./easy_account_creator.php
+msgid "Easy Account Creator Settings"
+msgstr "Easy Account Creator instellingen"
+
+#: ./templates/CRM/EasyAccountCreator/Form/Confirm.hlp
+msgid "The template that will be used can be set <a href=\"../../civicrm/admin/easy-account-creator\">here</a>."
+msgstr "Je kan het berichtsjabloon voor de welkomstmail <a href=\"../../civicrm/admin/easy-account-creator\">hier</a> aanpassen."
+

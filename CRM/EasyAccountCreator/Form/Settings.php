@@ -5,7 +5,7 @@ use CRM_EasyAccountCreator_ExtensionUtil as E;
 class CRM_EasyAccountCreator_Form_Settings extends CRM_Core_Form {
 
   public function buildQuickForm() {
-    $this->setTitle(E::ts('Easy User Creator Settings'));
+    $this->setTitle(E::ts('Easy Account Creator Settings'));
 
     $this->addFormElements();
     $this->addFormButtons();

@@ -1,0 +1,88 @@
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Create User"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Create a user for contact:"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "The contact must have an email address because it is used as login name."
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "A user with this email address already exists."
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Could not send welcome mail"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "User account created, and a welcome mail was sent."
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "User account created. No welcome mail was sent."
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Success"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Error"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Contact Name:"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Login Name:"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Password:"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php ./templates/CRM/EasyAccountCreator/Form/Confirm.hlp
+msgid "Send Welcome Mail?"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php
+msgid "Create user"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Confirm.php ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Cancel"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Settings saved."
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Email from name"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Email from address"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Message template"
+msgstr ""
+
+#: ./CRM/EasyAccountCreator/Form/Settings.php
+msgid "Save"
+msgstr ""
+
+#: ./easy_account_creator.php
+msgid "Easy Account Creator Settings"
+msgstr ""
+
+#: ./templates/CRM/EasyAccountCreator/Form/Confirm.hlp
+msgid "The template that will be used can be set <a href=\"../../civicrm/admin/easy-account-creator\">here</a>."
+msgstr ""
+
