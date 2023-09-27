@@ -38,7 +38,7 @@ abstract class CRM_EasyAccountCreator_User {
       'contactId' => $contactId,
       'tplParams' => [],
       'from' => '"' . Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_NAME) . '"  <' . Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_ADDRESS) . '>',
-      'toName' => $contactName,
+      'toName' => '"' . $contactName . '"',
       'toEmail' => $contactEmail,
     ]);
 
