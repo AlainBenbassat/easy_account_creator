@@ -2,7 +2,7 @@
 
 class CRM_EasyAccountCreator_Config {
   public const SETTING_EMAIL_FROM_NAME = 'easy_account_creator_email_from_name';
-  public const SETTING_EMAIL_FROM_ADDRESS = 'easy_account_creator_email_from_name';
+  public const SETTING_EMAIL_FROM_ADDRESS = 'easy_account_creator_email_from_address';
 
   public static function init() {
     self::getMsgTemplate();
