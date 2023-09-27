@@ -34,6 +34,7 @@ abstract class CRM_EasyAccountCreator_User {
     [$sent, $subject, $message, $html] = CRM_Core_BAO_MessageTemplate::sendTemplate([
       'groupName' => $optionGroup['name'],
       'workflow' => $msgTemplate['workflow_name'],
+      'messageTemplateID' => $msgTemplate['id'],
       'contactId' => $contactId,
       'tplParams' => [],
       'from' => '"' . Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_NAME) . '"  <' . Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_ADDRESS) . '>',
