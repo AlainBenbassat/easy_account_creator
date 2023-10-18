@@ -5,7 +5,7 @@ abstract class CRM_EasyAccountCreator_User {
   private const MAX_PWD_LENGTH = 48;
 
   abstract public function exists($email);
-  abstract public function create($name, $email);
+  abstract public function create($contactId, $name, $email);
 
   public function getRandomPassword() {
     $characters = '!@#$%*(){};:.,/0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -20,11 +20,15 @@ abstract class CRM_EasyAccountCreator_User {
     return $randomString;
   }
 
-  public function linktoContact($contactId, $ufId) {
-    Civi\Api4\UFMatch::create(FALSE)
-      ->addValue('uf_id', $ufId)
-      ->addValue('contact_id', $contactId)
-      ->execute();
+  public function linktoContact($contactId, $ufId, $email) {
+    $id = CRM_Core_DAO::singleValueQuery("select id from civicrm_uf_match where contact_id = $contactId and uf_id = $ufId");
+    if (!$id) {
+      Civi\Api4\UFMatch::create(FALSE)
+        ->addValue('uf_id', $ufId)
+        ->addValue('contact_id', $contactId)
+        ->addValue('uf_name', $email)
+        ->execute();
+    }
   }
 
   public function sendWelcomeMail($contactId, $contactName, $contactEmail) {

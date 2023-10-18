@@ -61,8 +61,8 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
 
     try {
       $user = CRM_EasyAccountCreator_UserFactory::getUser();
-      $account = $user->create($values['contact_email'], $values['contact_email']);
-      $user->linktoContact($values['contact_id'], $account->uid);
+      $account = $user->create($values['contact_id'], $values['contact_email'], $values['contact_email']);
+      $user->linktoContact($values['contact_id'], $account->uid, $values['contact_email']);
 
       if ($values['send_mail']) {
         $sent = $user->sendWelcomeMail($values['contact_id'], $values['contact_name'], $values['contact_email']);
