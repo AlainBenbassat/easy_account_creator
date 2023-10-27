@@ -31,7 +31,7 @@ abstract class CRM_EasyAccountCreator_User {
     }
   }
 
-  public function sendWelcomeMail($contactId, $contactName, $contactEmail) {
+  public function sendWelcomeMail($contactId, $contactName, $contactEmail, $passwordResetLink) {
     $optionGroup = CRM_EasyAccountCreator_Config::getOptionGroupForWorkflowMessage();
     $msgTemplate = CRM_EasyAccountCreator_Config::getMsgTemplate();
 
@@ -40,7 +40,9 @@ abstract class CRM_EasyAccountCreator_User {
       'workflow' => $msgTemplate['workflow_name'],
       'messageTemplateID' => $msgTemplate['id'],
       'contactId' => $contactId,
-      'tplParams' => [],
+      'tplParams' => [
+        'passwordResetLink' => $passwordResetLink,
+      ],
       'from' => '"' . Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_NAME) . '"  <' . Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_ADDRESS) . '>',
       'toName' => '"' . $contactName . '"',
       'toEmail' => $contactEmail,
