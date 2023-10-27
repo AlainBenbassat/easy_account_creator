@@ -43,6 +43,7 @@ abstract class CRM_EasyAccountCreator_User {
       'tplParams' => [
         'passwordResetLink' => $passwordResetLink,
       ],
+      'tokenContext' => ['contactId' => $contactId],
       'from' => '"' . Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_NAME) . '"  <' . Civi::settings()->get(CRM_EasyAccountCreator_Config::SETTING_EMAIL_FROM_ADDRESS) . '>',
       'toName' => '"' . $contactName . '"',
       'toEmail' => $contactEmail,
