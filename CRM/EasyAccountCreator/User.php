@@ -6,6 +6,7 @@ abstract class CRM_EasyAccountCreator_User {
 
   abstract public function exists($email);
   abstract public function create($contactId, $name, $email);
+  abstract public function getOneTimeLoginUrl($user);
 
   public function getRandomPassword() {
     $characters = '!@#$%*(){};:.,/0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

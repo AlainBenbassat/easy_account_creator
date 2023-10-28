@@ -63,7 +63,7 @@ class CRM_EasyAccountCreator_Form_Confirm extends CRM_Core_Form {
       $user = CRM_EasyAccountCreator_UserFactory::getUser();
       $account = $user->create($values['contact_id'], $values['contact_email'], $values['contact_email']);
       $user->linktoContact($values['contact_id'], $account->uid, $values['contact_email']);
-      $passwordResetLink = token_replace('[user:one-time-login-url]', ['user' => $account]);
+      $passwordResetLink = $user->getOneTimeLoginUrl($account);
 
       if ($values['send_mail']) {
         $sent = $user->sendWelcomeMail($values['contact_id'], $values['contact_name'], $values['contact_email'], $passwordResetLink);

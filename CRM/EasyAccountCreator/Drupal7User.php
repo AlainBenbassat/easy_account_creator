@@ -31,6 +31,10 @@ class CRM_EasyAccountCreator_Drupal7User extends CRM_EasyAccountCreator_User {
     return $user;
   }
 
+  public function getOneTimeLoginUrl($user) {
+    return user_pass_reset_url($user);
+  }
+
   private function removeDuplicate($contactId, $userId, $email) {
     // correct uf match table if needed
     // drupal or civi sometimes create a duplicate entry
