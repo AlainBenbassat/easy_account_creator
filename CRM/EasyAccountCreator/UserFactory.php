@@ -7,7 +7,7 @@ class CRM_EasyAccountCreator_UserFactory {
       return new CRM_EasyAccountCreator_WordpressUser();
     }
     else {
-      return new CRM_EasyAccountCreator_Drupal7User();
+      return new CRM_EasyAccountCreator_Drupal10User();
     }
   }
 }
