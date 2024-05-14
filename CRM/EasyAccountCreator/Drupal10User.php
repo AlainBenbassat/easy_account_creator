@@ -22,7 +22,6 @@ class CRM_EasyAccountCreator_Drupal10User extends CRM_EasyAccountCreator_User {
     $user->setUsername($name); // This username must be unique and accept only [a-Z,0-9, - _ @].
     $user->setPassword($this->getRandomPassword());
     $user->setEmail($email);
-    $user->addRole('authenticated');
     $user->enforceIsNew();
     $user->activate();
     $user->save();
