@@ -9,9 +9,9 @@ use CRM_EasyAccountCreator_ExtensionUtil as E;
 function easy_account_creator_civicrm_summaryActions(&$actions, $contactID) {
   if (!empty($actions['otherActions']['user-add'])) {
     $originalLink = 'civicrm/contact/view/useradd';
-//    $newLink = CRM_EasyAccountCreator_Config::getConfirmationScreenUrl();
+    $newLink = CRM_EasyAccountCreator_Config::getConfirmationScreenUrl();
 
-//    $actions['otherActions']['user-add']['href'] = str_replace($originalLink, $newLink, $actions['otherActions']['user-add']['href']);
+    $actions['otherActions']['user-add']['href'] = str_replace($originalLink, $newLink, $actions['otherActions']['user-add']['href']);
   }
 }
 

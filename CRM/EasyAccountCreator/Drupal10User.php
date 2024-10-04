@@ -26,7 +26,7 @@ class CRM_EasyAccountCreator_Drupal10User extends CRM_EasyAccountCreator_User {
     $user->activate();
     $user->save();
 
-    $this->removeDuplicate($contactId, $user->id(), $email);
+    //$this->removeDuplicate($contactId, $user->id(), $email);
 
     return $user;
   }
