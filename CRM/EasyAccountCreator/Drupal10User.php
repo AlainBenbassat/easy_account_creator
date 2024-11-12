@@ -26,8 +26,6 @@ class CRM_EasyAccountCreator_Drupal10User extends CRM_EasyAccountCreator_User {
     $user->activate();
     $user->save();
 
-    //$this->removeDuplicate($contactId, $user->id(), $email);
-
     return $user;
   }
 
@@ -35,24 +33,4 @@ class CRM_EasyAccountCreator_Drupal10User extends CRM_EasyAccountCreator_User {
     return user_pass_reset_url($user);
   }
 
-  private function removeDuplicate($contactId, $userId, $email) {
-    // correct uf match table if needed
-    // drupal or civi sometimes create a duplicate entry
-    $sql = "
-      select
-        *
-      from
-        civicrm_uf_match
-      where
-        uf_id = $userId
-    ";
-    $dao = CRM_Core_DAO::executeQuery($sql);
-    if ($dao->fetch()) {
-      if ($dao->contact_id != $contactId) {
-        $ufContactId = $dao->contact_id;
-        CRM_Core_DAO::executeQuery("update civicrm_uf_match set contact_id = $contactId where id = {$dao->id}");
-        CRM_Core_DAO::executeQuery("delete from civicrm_contact where id= $ufContactId");
-      }
-    }
-  }
 }
